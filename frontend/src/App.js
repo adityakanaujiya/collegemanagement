@@ -3,6 +3,7 @@ import Login from "./Screens/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import mystore from "./redux/store";
+import Chatbot from "./components/Chatbot";
 import StudentHome from "./Screens/Student/Home";
 import FacultyHome from "./Screens/Faculty/Home";
 import AdminHome from "./Screens/Admin/Home";
@@ -14,6 +15,7 @@ const App = () => {
     <>
       <Provider store={mystore}>
         <Router>
+          <Chatbot />
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/forget-password" element={<ForgetPassword />} />

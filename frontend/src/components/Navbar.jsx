@@ -3,6 +3,7 @@ import { FiLogOut } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import CustomButton from "./CustomButton";
+import ThemeToggle from "./ThemeToggle";
 const Navbar = () => {
   const router = useLocation();
   const navigate = useNavigate();
@@ -25,12 +26,15 @@ const Navbar = () => {
           </span>{" "}
           {router.state && router.state.type} Dashboard
         </p>
-        <CustomButton variant="danger" onClick={logouthandler}>
-          Logout
-          <span className="ml-2">
-            <FiLogOut />
-          </span>
-        </CustomButton>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <CustomButton variant="danger" onClick={logouthandler}>
+            Logout
+            <span className="ml-2">
+              <FiLogOut />
+            </span>
+          </CustomButton>
+        </div>
       </div>
     </div>
   );
