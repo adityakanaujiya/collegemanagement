@@ -91,15 +91,7 @@ const Student = () => {
   const searchStudents = async (e) => {
     e.preventDefault();
 
-    if (
-      !searchParams.enrollmentNo &&
-      !searchParams.name &&
-      !searchParams.semester &&
-      !searchParams.branch
-    ) {
-      toast.error("Please select at least one filter");
-      return;
-    }
+    // Allow empty filters — an empty search will return all students
 
     setDataLoading(true);
     setHasSearched(true);
@@ -198,8 +190,12 @@ const Student = () => {
       toast.dismiss();
       if (response.data.success) {
         if (!isEditing) {
+          const createdStudent = response.data.data;
+          const enrollMsg = createdStudent?.enrollmentNo
+            ? ` Enrollment No: ${createdStudent.enrollmentNo}`
+            : "";
           toast.success(
-            `Student created successfully! Default password: student123`
+            `Student created successfully!${enrollMsg} Default password: student123`
           );
         } else {
           toast.success(response.data.message);

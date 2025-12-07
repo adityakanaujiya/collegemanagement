@@ -20,7 +20,7 @@ const examSchema = new mongoose.Schema({
   },
   timetableLink: {
     type: String,
-    required: true,
+    required: false,
   },
   totalMarks: {
     type: Number,

@@ -189,10 +189,10 @@ const StudentFinder = () => {
           <div className="text-center mt-8 text-gray-600 flex flex-col items-center justify-center my-10 bg-white p-10 rounded-lg mx-auto w-[40%]">
             <img
               src="/assets/filter.svg"
-              alt="Select filters"
+              alt="Search students"
               className="w-64 h-64 mb-4"
             />
-            Please select at least one filter to search students
+            Click "Search" to list all students or use filters to narrow results
           </div>
         )}
 

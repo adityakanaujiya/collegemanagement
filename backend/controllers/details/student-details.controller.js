@@ -64,13 +64,17 @@ const registerStudentController = async (req, res) => {
       phone: req.body["emergencyContact[phone]"] || "",
     };
 
+    // Build payload explicitly and avoid accidentally using empty enrollmentNo from req.body
+    const payload = { ...req.body };
+    if (payload.enrollmentNo) delete payload.enrollmentNo;
+
     const user = await studentDetails.create({
-      ...req.body,
+      ...payload,
       emergencyContact,
       profile,
       password: "student123",
       email,
-      enrollmentNo,
+      enrollmentNo: Number(enrollmentNo),
     });
 
     const sanitizedUser = await studentDetails
@@ -81,8 +85,8 @@ const registerStudentController = async (req, res) => {
       res
     );
   } catch (error) {
-    console.error("Add Student Details Error: ", error);
-    return ApiResponse.internalServerError().send(res);
+    console.error("Add Student Details Error: ", error.message, error);
+    return ApiResponse.error(error.message || "Error creating student", 500).send(res);
   }
 };
 
@@ -305,12 +309,11 @@ const searchStudentsController = async (req, res) => {
     const { enrollmentNo, name, semester, branch } = req.body;
     let query = {};
 
-    if (!enrollmentNo && !name && !semester && !branch) {
-      return ApiResponse.badRequest("Select at least one filter").send(res);
-    }
-
+    // If no filters provided, return all students (empty `query` will match all)
     if (enrollmentNo) {
-      query.enrollmentNo = enrollmentNo;
+      // enrollmentNo is stored as Number in DB — convert incoming string to Number when possible
+      const parsedEnroll = Number(enrollmentNo);
+      query.enrollmentNo = isNaN(parsedEnroll) ? enrollmentNo : parsedEnroll;
     }
 
     if (name) {
@@ -322,7 +325,12 @@ const searchStudentsController = async (req, res) => {
     }
 
     if (semester) {
-      query.semester = semester;
+      const parsedSem = Number(semester);
+      if (!isNaN(parsedSem)) {
+        query.semester = parsedSem;
+      } else {
+        query.semester = semester;
+      }
     }
 
     if (branch) {
