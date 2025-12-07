@@ -100,8 +100,9 @@ facultyDetailsSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
-});
 
 const facultyDetails = mongoose.model("FacultyDetail", facultyDetailsSchema);
+
+module.exports = facultyDetails;
 
 module.exports = facultyDetails;
