@@ -52,13 +52,21 @@ const getAllDetailsController = async (req, res) => {
 
 const registerStudentController = async (req, res) => {
   try {
-    const profile = req.file.filename;
+    const profile = req.file ? req.file.filename : null;
 
     const enrollmentNo = Math.floor(100000 + Math.random() * 900000);
     const email = `${enrollmentNo}@gmail.com`;
 
+    // Parse emergencyContact from nested form data
+    const emergencyContact = {
+      name: req.body["emergencyContact[name]"] || "",
+      relationship: req.body["emergencyContact[relationship]"] || "",
+      phone: req.body["emergencyContact[phone]"] || "",
+    };
+
     const user = await studentDetails.create({
       ...req.body,
+      emergencyContact,
       profile,
       password: "student123",
       email,
@@ -73,7 +81,7 @@ const registerStudentController = async (req, res) => {
       res
     );
   } catch (error) {
-    console.error("Add Details Error: ", error);
+    console.error("Add Student Details Error: ", error);
     return ApiResponse.internalServerError().send(res);
   }
 };
