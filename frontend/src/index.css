@@ -20,3 +20,24 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+/* Basic dark-mode base styles so the theme toggle has visible effect */
+body {
+  background-color: #f8fafc;
+  color: #111827;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+html.dark body {
+  background-color: #0f172a;
+  color: #e5e7eb;
+}
+
+/* Ensure main containers inherit background */
+.dark .bg-white {
+  background-color: #0b1220 !important;
+}
+.dark .text-gray-800 {
+  color: #e5e7eb !important;
+}
+
