@@ -78,19 +78,25 @@ const Branch = () => {
         });
       }
       toast.dismiss();
-      if (response.data.success) {
+      if (response && response.data && response.data.success) {
         toast.success(response.data.message);
         setData({ name: "", branchId: "" });
         setShowAddForm(false);
         setIsEditing(false);
         setSelectedBranchId(null);
         getBranchHandler();
-      } else {
+      } else if (response && response.data) {
         toast.error(response.data.message);
+      } else {
+        toast.error("Failed to process request");
       }
     } catch (error) {
       toast.dismiss();
-      toast.error(error.response.data.message);
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An error occurred. Please try again.");
+      }
     }
   };
 
