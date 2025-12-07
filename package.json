@@ -2,11 +2,11 @@
   "name": "cms-backend",
   "version": "1.0.0",
   "description": "MERN Stack College Management System",
-  "main": "index.js",
+  "main": "backend/index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "seed": "node admin-seeder.js"
+    "start": "node backend/index.js",
+    "dev": "nodemon backend/index.js",
+    "seed": "node backend/admin-seeder.js"
   },
   "author": "Krish Jotaniya",
   "license": "ISC",
